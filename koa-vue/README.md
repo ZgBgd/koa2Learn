@@ -17,5 +17,12 @@ npm run build
 # build for production and view the bundle analyzer report
 npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 项目说明
+> 使用vue+koa+mongodb 搭建项目，使用koa2-cors 允许跨域。
+> koa 服务启动
+``` ruby
+    # 进入koa服务文件夹
+    cd ./service
+    # 安装 nodemon  npm install nodemon -g 
+    nodemon app.js 
+    
