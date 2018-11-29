@@ -12,7 +12,7 @@ router.post('/',async ctx=>{
             if(userinfoin.length == 0 ){
                 ctx.body = {...serviceConfig.RETURN_MSG,...serviceConfig.NO_USER};
             }else {
-                let returnData = await db.find('user',logindata);
+                let returnData = await db.find('user',{username: logindata.username,password:logindata.password});
                 if(returnData.length == 0 ){
                     ctx.body = {...serviceConfig.RETURN_MSG,...serviceConfig.PASS_ERROR};
                 }else{

@@ -1,12 +1,18 @@
 <template>
     <div class="register-warpper">
         <div class="register-area">
-            <el-form label-width="100px">
-                <el-form-item  label="用户名">
-                    <el-input v-model="username">123</el-input>
+            <el-form :model="formInfo" :rules="rules" label-width="100px" ref="register" >
+                <el-form-item  label="用户名" prop="username">
+                    <el-input v-model="formInfo.username">123</el-input>
                 </el-form-item>
-                <el-form-item  label="密码">
-                    <el-input v-model="password" type="pasword">123</el-input>
+                <el-form-item  label="密码" prop="password">
+                    <el-input type="password" v-model="formInfo.password">123</el-input>
+                </el-form-item>
+                <el-form-item label="邮箱" prop="email">
+                    <el-input type="email" v-model="formInfo.email"></el-input>
+                </el-form-item>
+                <el-form-item label="手机号码" prop="phoneNum">
+                    <el-input type="tel" v-model="formInfo.phoneNum"></el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="getSubmit">提交</el-button>
@@ -22,8 +28,18 @@
         name: "register",
         data(){
             return {
-                username:"",
-                password:"",
+               formInfo:{
+                   username:"",
+                   password:"",
+                   email:"",
+                   phoneNum:""
+               },
+               rules:{
+                   username:[{required:true,message:"请输入用户名",trigger:"change"}],
+                   password:[{required:true,message:"请输入密码",trigger:"change"}],
+                   email:[{required:true,message:"请输入邮箱号码",trigger:"change"}],
+                   phoneNum:[{required:true,message:"请输入手机号码",trigger:"change"}]
+               }
             }
         },
         methods:{
@@ -31,7 +47,20 @@
                 this.$router.push('/login');
             },
             getSubmit(){
+                this.$refs.register.validate((valid)=>{
+                    if(valid){
+                        this.$ajax('/users/register',this.formInfo).then(res=>{
+                            if(res.statusCode == "0" ){
+                                this.$message.success('注册成功');
+                                this.$router.push('/');
+                            }else {
+                                this.$message.error(res.msg);
+                            }
+                        })
+                    }else {
 
+                    }
+                })
             }
         }
     }

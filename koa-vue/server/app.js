@@ -28,16 +28,13 @@ app.use(session(CONFIG, app));
 const URL_CONFIG = ['/users/login', '/users/register','/users/getVerCode'];
 // 应用中间件
 app.use(async (ctx, next) => {
-    console.log(ctx.url);
     let url = ctx.url.split('?')[0];
-    console.log(false && true);
     if ((!ctx.session.loginstatus) ) {
         if(URL_CONFIG.indexOf(url) > -1){
             await next();
         }else {
             ctx.body = { data: {},msg:"请重新登录"}
         }
-
     } else { 
         await next();
     }  

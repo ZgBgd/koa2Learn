@@ -36,7 +36,7 @@ export default {
                     "Content-Type": "application/x-www-form-urlencoded"
                 }
             }).then((res) => {
-                resolve(res);
+                resolve(res.data);
             }, (err) => {
                 reject(err);
 

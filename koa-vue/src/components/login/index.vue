@@ -64,9 +64,15 @@
                     if (valid) {
                         this.$ajax('/users/login',{username:this.ruleForm2.username,password:this.ruleForm2.pass,verCode:this.ruleForm2.verCode}).then(res=>{
                             console.log(res);
+                            if(res.statusCode == "0" ){
+                                this.$message.success('登录成功');
+                                this.$router.push('/main');
+                            }else{
+                                this.$message.error(res.msg);
+                            }
                         })
                     } else {
-                        console.log('error submit!!');
+                        // console.log('error submit!!');
                         return false;
                     }
                 });
@@ -76,7 +82,7 @@
             },
             getQrCode(){
                 this.$ajax(`/users/getVerCode?t=${Math.random()}`,"",'GET').then(res=>{
-                    this.svgData = res.data;
+                    this.svgData = res;
                 })
             }
         }
