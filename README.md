@@ -1,7 +1,7 @@
 <!-- # koa2Learn -->
-#koa 基本的用法学习
+# koa 基本的用法学习
 
-##koa-vue 文件夹是一个 koa+vue+element 等技术实现的一个小的后台， koa 常用的技术 如 koa-router koa-bodyparser koa-session svg-captcha  都有涉及;
+## koa-vue 文件夹是一个 koa+vue+element 等技术实现的一个小的后台， koa 常用的技术 如 koa-router koa-bodyparser koa-session svg-captcha  都有涉及;
 
 
 #koa2 路径
