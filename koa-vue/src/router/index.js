@@ -7,12 +7,7 @@ Vue.use(Router)
 export default new Router({
     routes: [
         {
-            path: '/',
-            name: 'HelloWorld',
-            component: resolve => require(['@/components/HelloWorld'], resolve),//懒加载
-        },
-        {
-            path:"/login",
+            path:"/",
             name:"Login",
             component: resolve => require(['@/components/login/index'],resolve),
         },

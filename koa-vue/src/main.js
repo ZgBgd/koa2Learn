@@ -7,6 +7,7 @@ import ajax from "./api";
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import "element-ui/lib/theme-chalk/reset.css";
+import "./static/less/change.less"
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = ajax.ajaxs;
 /* eslint-disable no-new */

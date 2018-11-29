@@ -8,8 +8,12 @@
                 <el-form-item label="密码" prop="pass">
                     <el-input type="password" v-model="ruleForm2.pass" autocomplete="on"></el-input>
                 </el-form-item>
-                <el-form-item label="确认密码" prop="checkPass">
-                    <el-input type="password" v-model="ruleForm2.checkPass" autocomplete="off"></el-input>
+                <el-form-item label="验证码" prop="verCode">
+                    <el-input v-model="ruleForm2.verCode">
+                        <template slot="append">
+                            <div @click="getQrCode" class="verCodes" v-html="svgData"></div>
+                        </template>
+                    </el-input>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('ruleForm2')">登录</el-button>
@@ -30,41 +34,35 @@
                 }
                 callback();
             };
-            var validatePass2 = (rule, value, callback) => {
-                if (value !== this.ruleForm2.pass) {
-                    callback(new Error('两次输入密码不一致!'));
-                } else {
-                    callback();
-                }
-            };
             return {
                 ruleForm2: {
                     username:"",
                     pass: '',
-                    checkPass: '',
+                    verCode: '',
 
                 },
+                svgData:"",
                 rulessec: {
                     username:[{
-                        required:true,message:"请输入用户名"
+                        required:true,message:"请输入用户名",trigger:"change"
                     }],
                     pass: [
-                        {required:true,message:"请输入密码"},
-                        { validator: validatePass, trigger: 'change' }
+                        {required:true,message:"请输入密码",trigger:"change"}
                     ],
-                    checkPass: [
-                        {required:true,message:"请再次输入密码"},
-                        { validator: validatePass2, trigger: 'change' }
-                    ],
-
+                    verCode:[{
+                        required:true,message:"请输入验证码",trigger:"change"
+                    }]
                 }
             };
+        },
+        created(){
+            this.getQrCode();
         },
         methods: {
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.$ajax('/users/login',{username:this.ruleForm2.username,password:this.ruleForm2.pass}).then(res=>{
+                        this.$ajax('/users/login',{username:this.ruleForm2.username,password:this.ruleForm2.pass,verCode:this.ruleForm2.verCode}).then(res=>{
                             console.log(res);
                         })
                     } else {
@@ -75,6 +73,11 @@
             },
             resetForm(formName) {
                 this.$router.push('/register');
+            },
+            getQrCode(){
+                this.$ajax(`/users/getVerCode?t=${Math.random()}`,"",'GET').then(res=>{
+                    this.svgData = res.data;
+                })
             }
         }
     }
@@ -90,5 +93,8 @@
         margin:auto;
         width: 400px;
         height: 300px;
+        .verCodes{
+            height: 40px;
+        }
     }
 </style>
